@@ -15,7 +15,8 @@ CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "1000"))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
 
 # Retriever
-
+RETRIEVER_K = int(os.getenv("RETRIEVER_K", "3"))
+RETRIEVER_SCORE_THRESHOLD = float(os.getenv("RETRIEVER_SCORE_THRESHOLD", "0.2"))
 
 # Chroma
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "legislation_ia")
