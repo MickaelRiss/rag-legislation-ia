@@ -8,7 +8,6 @@ from config import (
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader, BSHTMLLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_core.documents import Document
 from bs4 import BeautifulSoup
 from vector import get_vector_store
 from uuid import uuid4

@@ -1,7 +1,35 @@
+# Environment & secrets
 .env
-.venv
-./chroma_langchain_db
-notebooks
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Vector database (regenerable via ingest)
+chroma_langchain_db/
+
+# Notebooks
+notebooks/
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python version manager
 .python-version
-__pycache__
-pyproject.toml
