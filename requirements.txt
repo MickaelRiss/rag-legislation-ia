@@ -4,4 +4,6 @@ langchain-chroma
 langchain_core
 langchain-text-splitters
 langchain-community
+beautifulsoup4 
+lxml
 pypdf

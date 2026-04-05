@@ -7,17 +7,18 @@ load_dotenv()
 DIRECTORY = "./data"
 
 # Models
-MODEL_NAME = os.getenv("MODEL_NAME", "llama3.2")
+MODEL_NAME = os.getenv("MODEL_NAME", "llama3.1:8b")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "nomic-embed-text")
 
 # Chunking
-CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "1000"))
-CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
+CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "3000"))
+CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "400"))
 
 # Retriever
-RETRIEVER_K = int(os.getenv("RETRIEVER_K", "3"))
+RETRIEVER_K = int(os.getenv("RETRIEVER_K", "8"))
 RETRIEVER_SCORE_THRESHOLD = float(os.getenv("RETRIEVER_SCORE_THRESHOLD", "0.2"))
 
 # Chroma
 COLLECTION_NAME = os.getenv("COLLECTION_NAME", "legislation_ia")
-DB_PATH = "./chroma_langchain_db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "chroma_langchain_db")

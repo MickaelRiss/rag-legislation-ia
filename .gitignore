@@ -1,0 +1,7 @@
+.env
+.venv
+./chroma_langchain_db
+notebooks
+.python-version
+__pycache__
+pyproject.toml
