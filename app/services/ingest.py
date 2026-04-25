@@ -1,6 +1,6 @@
 import os
 import re
-from config import (
+from app.config import (
     DIRECTORY,
     CHUNK_SIZE,
     CHUNK_OVERLAP,

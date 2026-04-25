@@ -3,7 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
-from config import MODEL_NAME
+from app.config import MODEL_NAME
 
 SYSTEM_PROMPT = (
     "Tu es un assistant juridique spécialisé dans la législation européenne et française "
@@ -53,3 +53,45 @@ def build_chain():
         input_messages_key="question",
         history_messages_key="history",
     )
+
+
+def answer_question(
+    question: str,
+    session_id: str,
+    retriever,
+    chain,
+) -> dict:
+    """
+    Orchestre le RAG : récupère les documents pertinents puis interroge le LLM.
+
+    Args:
+        question: la question de l'utilisateur
+        session_id: identifiant de conversation (pour l'historique)
+        retriever: l'objet retriever ChromaDB (déjà initialisé)
+        chain: la chaîne LangChain (déjà initialisée)
+
+    Returns:
+        dict avec 'answer' (str) et 'sources' (list de dicts)
+    """
+    # 1. Retrieval : on va chercher les documents pertinents dans ChromaDB
+    documents = retriever.invoke(question)
+
+    # 2. Generation : on passe les documents au LLM avec la question
+    answer = chain.invoke(
+        {
+            "documents": "\n\n".join(doc.page_content for doc in documents),
+            "question": question,
+        },
+        config={"configurable": {"session_id": session_id}},
+    )
+
+    # 3. On formate les sources pour que le frontend puisse les afficher
+    sources = [
+        {
+            "content": doc.page_content,
+            "metadata": doc.metadata,
+        }
+        for doc in documents
+    ]
+
+    return {"answer": answer, "sources": sources}

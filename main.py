@@ -1,6 +1,6 @@
 import httpx
-from vector import get_retriever
-from agent import build_chain
+from app.services.vector import get_retriever
+from app.services.agent import build_chain, answer_question
 
 
 def main():
@@ -24,15 +24,18 @@ def main():
             break
 
         try:
-            documents = retriever.invoke(question)
-            result = chain.invoke(
-                {
-                    "documents": "\n\n".join(doc.page_content for doc in documents),
-                    "question": question,
-                },
-                config={"configurable": {"session_id": "default"}},
+            result = answer_question(
+                question=question,
+                session_id="cli-default",
+                retriever=retriever,
+                chain=chain,
             )
-            print(result)
+            print("\n--- Réponse ---")
+            print(result["answer"])
+            print(f"\n--- Sources ({len(result['sources'])} documents) ---")
+            for i, src in enumerate(result["sources"], 1):
+                print(f"\n[{i}] {src['metadata']}")
+            print()
         except Exception as e:
             print(f"Erreur inattendue : {e}\n")
 

@@ -1,4 +1,4 @@
-from config import (
+from app.config import (
     EMBEDDING_MODEL,
     COLLECTION_NAME,
     DB_PATH,
